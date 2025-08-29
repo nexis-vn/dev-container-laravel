@@ -35,10 +35,13 @@ RUN apt-get update \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Install Composer from: https://hub.docker.com/_/composer
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-RUN  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-RUN  apt-get install -y nodejs
+# Install Composer manually
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chmod +x /usr/local/bin/composer
+# Install Node.js 20.x
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
 RUN apt-get install -y libzip-dev libicu-dev libxml2-dev libcurl4-openssl-dev \
     && docker-php-ext-configure zip  \
     && docker-php-ext-configure intl \
