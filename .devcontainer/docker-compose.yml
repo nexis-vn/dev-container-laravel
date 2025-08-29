@@ -10,7 +10,7 @@ services:
       - "8000:8000"
     command: sleep infinity
   mariadb:
-    image: mariadb:10.4
+    image: mariadb:11.4
     expose:
       # Expose mariadb port to php service (Access as hostname "mariadb" from within php container)
       - "3306"
@@ -20,3 +20,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

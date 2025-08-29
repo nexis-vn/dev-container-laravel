@@ -1,22 +1,16 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/php-7
 {
-	"name": "PHP 7",
+	"name": "Laravel 12 with PHP 8.3",
     "dockerComposeFile": "docker-compose.yml",
     "service": "php",
     // Use 'settings' to set *default* container specific settings.json values on container create.
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
-        "phpSniffer.executablesFolder": "./vendor/bin/",
-        "phpSniffer.run": "onSave"
-    },
-
 	// Uncomment the next line if you want to publish any ports.
 	"forwardPorts": [8000],
 
 	// Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": "",
+	"postCreateCommand": "composer install",
 
 	// Uncomment the next line to use a non-root user. On Linux, this will prevent
 	// new files getting created as root, but you may need to update the USER_UID
@@ -26,13 +20,27 @@
 				 	"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/home/vscode/.ssh"
 			],
 
-
-	// Add the IDs of extensions you want installed when the container is created in the array below.
-	"extensions": [
-                     "bmewburn.vscode-intelephense-client",
-                     "MehediDracula.php-namespace-resolver",
-                     "MS-vsliveshare.vsliveshare-pack",
-                     "EditorConfig.EditorConfig",
-                     "wongjn.php-sniffer"
-	]
+	"customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "intelephense.files.maxSize": 5000000,
+                "php.validate.executablePath": "/usr/local/bin/php",
+                "emmet.includeLanguages": {
+                    "blade": "html"
+                }
+            },
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "onecentlin.laravel-blade",
+                "onecentlin.laravel-extension-pack",
+                "mikestead.dotenv",
+                "EditorConfig.EditorConfig",
+                "ms-vscode.vscode-json",
+                "formulahendry.auto-rename-tag",
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode"
+            ]
+        }
+    }
 }
